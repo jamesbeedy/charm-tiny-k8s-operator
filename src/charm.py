@@ -12,6 +12,7 @@ from jinja2 import Environment, FileSystemLoader
 from ops.charm import CharmBase
 from ops.main import main
 from ops.model import (
+    ActiveStatus,
     BlockedStatus,
     MaintenanceStatus,
     ModelError,
@@ -31,6 +32,11 @@ class TestK8sCharm(CharmBase):
             self._on_start
         )
 
+        self.framework.observe(
+            self.on.update_status,
+            self._on_update_status
+        )
+
     def _on_start(self, event):
         logger.debug("################ LOGGING EVENT START ####################")
 
@@ -41,17 +47,21 @@ class TestK8sCharm(CharmBase):
         spec = _make_pod_spec(name, image_meta, config) 
         self.model.pod.set_spec(spec)
 
+    def _on_update_status(self, event):
+        logger.debug("################ LOGGING EVENT UPDATE_STATUS ####################")
+        self.unit.status = ActiveStatus("RATS")
+
 
 def _make_pod_spec(name, image_info, config):
 
-    def load_template(name, path=None):
+    def load_template():
         """ load template file
         :param str name: name of template file
         :param str path: alternate location of template location
         """
         env = Environment(
             loader=FileSystemLoader(os.path.join(_charm_dir(), 'templates')))
-        return env.get_template(name)
+        return env.get_template('spec_template.yaml')
 
     data = {
         'env': {},
@@ -64,10 +74,10 @@ def _make_pod_spec(name, image_info, config):
         if key.startswith("btc"):
             data['env'][key.upper().replace("-", "_")] = val
 
-    app_yml = load_template('spec_template.yaml')
+    app_yml = load_template()
     app_yml = app_yml.render(data=data)
 
-    return app_yml
+    return yaml.load(app_yml)
 
 
 def _charm_dir():

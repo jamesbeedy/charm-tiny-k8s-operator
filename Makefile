@@ -7,6 +7,7 @@ clean: ## Remove .tox and build dirs
 	rm -rf venv/
 	rm -rf build/
 	rm -rf out/
+	rm *.charm
 
 build: clean
 	@./scripts/build_charm.sh
