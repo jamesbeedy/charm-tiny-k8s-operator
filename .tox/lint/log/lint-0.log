@@ -1,0 +1,7 @@
+action: lint, msg: getenv
+cwd: /home/bdx/allcode/github/omnivector/test-k8s-operator/.tox
+cmd: /usr/bin/python3 -m virtualenv --no-download --python /usr/bin/python3 lint
+created virtual environment CPython3.8.2.final.0-64 in 267ms
+  creator CPython3Posix(dest=/home/bdx/allcode/github/omnivector/test-k8s-operator/.tox/lint, clear=False, global=False)
+  seeder FromAppData(download=False, distlib=latest, pep517=latest, certifi=latest, distro=latest, six=latest, chardet=latest, pytoml=latest, retrying=latest, requests=latest, colorama=latest, webencodings=latest, idna=latest, pip=latest, pyparsing=latest, packaging=latest, contextlib2=latest, ipaddr=latest, setuptools=latest, msgpack=latest, wheel=latest, CacheControl=latest, appdirs=latest, progress=latest, urllib3=latest, pkg_resources=latest, lockfile=latest, html5lib=latest, via=copy, app_data_dir=/home/bdx/.local/share/virtualenv/seed-app-data/v1.0.1.debian)
+  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
